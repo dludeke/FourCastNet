@@ -106,6 +106,7 @@ def downsample(x, scale=0.125):
 def setup(params):
     device = torch.cuda.current_device() if torch.cuda.is_available() else 'cpu'
     #get data loader
+    print(f"Params inf data path = {params.inf_data_path}")
     valid_data_loader, valid_dataset = get_data_loader(params, params.inf_data_path, dist.is_initialized(), train=False)
     img_shape_x = valid_dataset.img_shape_x
     img_shape_y = valid_dataset.img_shape_y

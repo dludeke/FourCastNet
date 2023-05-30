@@ -59,7 +59,6 @@ from utils.img_utils import reshape_fields, reshape_precip
 
 
 def get_data_loader(params, files_pattern, distributed, train):
-
   dataset = GetDataset(params, files_pattern, train)
   sampler = DistributedSampler(dataset, shuffle=train) if distributed else None
   

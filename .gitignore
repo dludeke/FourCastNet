@@ -15,3 +15,6 @@ utils/.ipynb_checkpoints/*
 ray_results
 *.pdf
 *.svg
+out_of_sample data
+FCN_weights_v0
+*.npy

@@ -1,0 +1,294 @@
+2023-06-05 22:57:43,299 - root - INFO - --------------- Versions ---------------
+2023-06-05 22:57:43,311 - root - INFO - git branch: b'* master'
+2023-06-05 22:57:43,321 - root - INFO - git hash: b'011072c6720feb348f2f494f26c5c936189986fb'
+2023-06-05 22:57:43,321 - root - INFO - Torch: 2.0.1+cu117
+2023-06-05 22:57:43,321 - root - INFO - ----------------------------------------
+2023-06-05 22:57:43,321 - root - INFO - ------------------ Configuration ------------------
+2023-06-05 22:57:43,321 - root - INFO - Configuration file: /home/ubuntu/FourCastNet/config/AFNO.yaml
+2023-06-05 22:57:43,321 - root - INFO - Configuration name: afno_backbone_finetune
+2023-06-05 22:57:43,321 - root - INFO - lr 0.0001
+2023-06-05 22:57:43,321 - root - INFO - batch_size 64
+2023-06-05 22:57:43,321 - root - INFO - log_to_wandb True
+2023-06-05 22:57:43,321 - root - INFO - max_epochs 50
+2023-06-05 22:57:43,322 - root - INFO - pretrained True
+2023-06-05 22:57:43,322 - root - INFO - two_step_training True
+2023-06-05 22:57:43,322 - root - INFO - pretrained_ckpt_path None
+2023-06-05 22:57:43,322 - root - INFO - scheduler CosineAnnealingLR
+2023-06-05 22:57:43,322 - root - INFO - in_channels [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+2023-06-05 22:57:43,322 - root - INFO - out_channels [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+2023-06-05 22:57:43,322 - root - INFO - orography False
+2023-06-05 22:57:43,322 - root - INFO - orography_path None
+2023-06-05 22:57:43,322 - root - INFO - exp_dir /home/ubuntu/FourCastNet/exp_dir
+2023-06-05 22:57:43,322 - root - INFO - train_data_path /pscratch/sd/s/shas1693/data/era5/train
+2023-06-05 22:57:43,322 - root - INFO - valid_data_path /pscratch/sd/s/shas1693/data/era5/test
+2023-06-05 22:57:43,322 - root - INFO - inf_data_path /content/drive/Shareddrives/CS 231N (DuMBies)/FCN/FourCastNet/out_of_sample data
+2023-06-05 22:57:43,322 - root - INFO - time_means_path /content/drive/Shareddrives/CS 231N (DuMBies)/FCN/FourCastNet/stats_v0/time_means.npy
+2023-06-05 22:57:43,322 - root - INFO - global_means_path /content/drive/Shareddrives/CS 231N (DuMBies)/FCN/FourCastNet/stats_v0/global_means.npy
+2023-06-05 22:57:43,322 - root - INFO - global_stds_path /content/drive/Shareddrives/CS 231N (DuMBies)/FCN/FourCastNet/stats_v0/global_stds.npy
+2023-06-05 22:57:43,322 - root - INFO - loss l2
+2023-06-05 22:57:43,322 - root - INFO - num_data_workers 4
+2023-06-05 22:57:43,322 - root - INFO - dt 1
+2023-06-05 22:57:43,322 - root - INFO - n_history 0
+2023-06-05 22:57:43,322 - root - INFO - prediction_type iterative
+2023-06-05 22:57:43,322 - root - INFO - prediction_length 41
+2023-06-05 22:57:43,322 - root - INFO - n_initial_conditions 5
+2023-06-05 22:57:43,323 - root - INFO - ics_type default
+2023-06-05 22:57:43,323 - root - INFO - save_raw_forecasts True
+2023-06-05 22:57:43,323 - root - INFO - save_channel False
+2023-06-05 22:57:43,323 - root - INFO - masked_acc False
+2023-06-05 22:57:43,323 - root - INFO - maskpath None
+2023-06-05 22:57:43,323 - root - INFO - perturb False
+2023-06-05 22:57:43,323 - root - INFO - add_grid False
+2023-06-05 22:57:43,323 - root - INFO - N_grid_channels 0
+2023-06-05 22:57:43,323 - root - INFO - gridtype sinusoidal
+2023-06-05 22:57:43,323 - root - INFO - roll False
+2023-06-05 22:57:43,323 - root - INFO - num_blocks 8
+2023-06-05 22:57:43,323 - root - INFO - nettype afno
+2023-06-05 22:57:43,323 - root - INFO - patch_size 8
+2023-06-05 22:57:43,323 - root - INFO - width 56
+2023-06-05 22:57:43,323 - root - INFO - modes 32
+2023-06-05 22:57:43,323 - root - INFO - target default
+2023-06-05 22:57:43,323 - root - INFO - normalization zscore
+2023-06-05 22:57:43,323 - root - INFO - log_to_screen True
+2023-06-05 22:57:43,323 - root - INFO - save_checkpoint True
+2023-06-05 22:57:43,323 - root - INFO - enable_nhwc False
+2023-06-05 22:57:43,323 - root - INFO - optimizer_type FusedAdam
+2023-06-05 22:57:43,323 - root - INFO - crop_size_x None
+2023-06-05 22:57:43,324 - root - INFO - crop_size_y None
+2023-06-05 22:57:43,324 - root - INFO - plot_animations False
+2023-06-05 22:57:43,324 - root - INFO - add_noise False
+2023-06-05 22:57:43,324 - root - INFO - noise_std 0
+2023-06-05 22:57:43,324 - root - INFO - epsilon_factor 0
+2023-06-05 22:57:43,324 - root - INFO - world_size 1
+2023-06-05 22:57:43,324 - root - INFO - experiment_dir /home/ubuntu/FourCastNet/exp_dir/afno_backbone_finetune/00
+2023-06-05 22:57:43,324 - root - INFO - checkpoint_path /home/ubuntu/FourCastNet/exp_dir/afno_backbone_finetune/00/training_checkpoints/ckpt.tar
+2023-06-05 22:57:43,324 - root - INFO - best_checkpoint_path /home/ubuntu/FourCastNet/exp_dir/afno_backbone_finetune/00/training_checkpoints/best_ckpt.tar
+2023-06-05 22:57:43,324 - root - INFO - resuming False
+2023-06-05 22:57:43,324 - root - INFO - local_rank 0
+2023-06-05 22:57:43,324 - root - INFO - enable_amp True
+2023-06-05 22:57:43,324 - root - INFO - name afno_backbone_finetune_00
+2023-06-05 22:57:43,324 - root - INFO - group era5_precipafno_backbone_finetune
+2023-06-05 22:57:43,324 - root - INFO - project ERA5_precip
+2023-06-05 22:57:43,324 - root - INFO - entity flowgan
+2023-06-05 22:57:43,324 - root - INFO - ---------------------------------------------------
+2023-06-05 23:02:48,795 - root - INFO - --------------- Versions ---------------
+2023-06-05 23:02:48,806 - root - INFO - git branch: b'* master'
+2023-06-05 23:02:48,816 - root - INFO - git hash: b'011072c6720feb348f2f494f26c5c936189986fb'
+2023-06-05 23:02:48,816 - root - INFO - Torch: 2.0.1+cu117
+2023-06-05 23:02:48,816 - root - INFO - ----------------------------------------
+2023-06-05 23:02:48,816 - root - INFO - ------------------ Configuration ------------------
+2023-06-05 23:02:48,816 - root - INFO - Configuration file: /home/ubuntu/FourCastNet/config/AFNO.yaml
+2023-06-05 23:02:48,816 - root - INFO - Configuration name: afno_backbone_finetune
+2023-06-05 23:02:48,816 - root - INFO - lr 0.0001
+2023-06-05 23:02:48,816 - root - INFO - batch_size 64
+2023-06-05 23:02:48,816 - root - INFO - log_to_wandb True
+2023-06-05 23:02:48,817 - root - INFO - max_epochs 50
+2023-06-05 23:02:48,817 - root - INFO - pretrained True
+2023-06-05 23:02:48,817 - root - INFO - two_step_training True
+2023-06-05 23:02:48,817 - root - INFO - pretrained_ckpt_path None
+2023-06-05 23:02:48,817 - root - INFO - scheduler CosineAnnealingLR
+2023-06-05 23:02:48,817 - root - INFO - in_channels [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+2023-06-05 23:02:48,817 - root - INFO - out_channels [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+2023-06-05 23:02:48,817 - root - INFO - orography False
+2023-06-05 23:02:48,817 - root - INFO - orography_path None
+2023-06-05 23:02:48,817 - root - INFO - exp_dir /home/ubuntu/FourCastNet/exp_dir
+2023-06-05 23:02:48,817 - root - INFO - train_data_path /pscratch/sd/s/shas1693/data/era5/train
+2023-06-05 23:02:48,817 - root - INFO - valid_data_path /pscratch/sd/s/shas1693/data/era5/test
+2023-06-05 23:02:48,817 - root - INFO - inf_data_path /content/drive/Shareddrives/CS 231N (DuMBies)/FCN/FourCastNet/out_of_sample data
+2023-06-05 23:02:48,817 - root - INFO - time_means_path /content/drive/Shareddrives/CS 231N (DuMBies)/FCN/FourCastNet/stats_v0/time_means.npy
+2023-06-05 23:02:48,817 - root - INFO - global_means_path /content/drive/Shareddrives/CS 231N (DuMBies)/FCN/FourCastNet/stats_v0/global_means.npy
+2023-06-05 23:02:48,817 - root - INFO - global_stds_path /content/drive/Shareddrives/CS 231N (DuMBies)/FCN/FourCastNet/stats_v0/global_stds.npy
+2023-06-05 23:02:48,817 - root - INFO - loss l2
+2023-06-05 23:02:48,817 - root - INFO - num_data_workers 4
+2023-06-05 23:02:48,817 - root - INFO - dt 1
+2023-06-05 23:02:48,817 - root - INFO - n_history 0
+2023-06-05 23:02:48,817 - root - INFO - prediction_type iterative
+2023-06-05 23:02:48,817 - root - INFO - prediction_length 41
+2023-06-05 23:02:48,817 - root - INFO - n_initial_conditions 5
+2023-06-05 23:02:48,817 - root - INFO - ics_type default
+2023-06-05 23:02:48,817 - root - INFO - save_raw_forecasts True
+2023-06-05 23:02:48,817 - root - INFO - save_channel False
+2023-06-05 23:02:48,817 - root - INFO - masked_acc False
+2023-06-05 23:02:48,817 - root - INFO - maskpath None
+2023-06-05 23:02:48,817 - root - INFO - perturb False
+2023-06-05 23:02:48,818 - root - INFO - add_grid False
+2023-06-05 23:02:48,818 - root - INFO - N_grid_channels 0
+2023-06-05 23:02:48,818 - root - INFO - gridtype sinusoidal
+2023-06-05 23:02:48,818 - root - INFO - roll False
+2023-06-05 23:02:48,818 - root - INFO - num_blocks 8
+2023-06-05 23:02:48,818 - root - INFO - nettype afno
+2023-06-05 23:02:48,818 - root - INFO - patch_size 8
+2023-06-05 23:02:48,818 - root - INFO - width 56
+2023-06-05 23:02:48,818 - root - INFO - modes 32
+2023-06-05 23:02:48,818 - root - INFO - target default
+2023-06-05 23:02:48,818 - root - INFO - normalization zscore
+2023-06-05 23:02:48,818 - root - INFO - log_to_screen True
+2023-06-05 23:02:48,818 - root - INFO - save_checkpoint True
+2023-06-05 23:02:48,818 - root - INFO - enable_nhwc False
+2023-06-05 23:02:48,818 - root - INFO - optimizer_type FusedAdam
+2023-06-05 23:02:48,818 - root - INFO - crop_size_x None
+2023-06-05 23:02:48,818 - root - INFO - crop_size_y None
+2023-06-05 23:02:48,818 - root - INFO - plot_animations False
+2023-06-05 23:02:48,818 - root - INFO - add_noise False
+2023-06-05 23:02:48,818 - root - INFO - noise_std 0
+2023-06-05 23:02:48,818 - root - INFO - epsilon_factor 0
+2023-06-05 23:02:48,818 - root - INFO - world_size 1
+2023-06-05 23:02:48,818 - root - INFO - experiment_dir /home/ubuntu/FourCastNet/exp_dir/afno_backbone_finetune/00
+2023-06-05 23:02:48,818 - root - INFO - checkpoint_path /home/ubuntu/FourCastNet/exp_dir/afno_backbone_finetune/00/training_checkpoints/ckpt.tar
+2023-06-05 23:02:48,818 - root - INFO - best_checkpoint_path /home/ubuntu/FourCastNet/exp_dir/afno_backbone_finetune/00/training_checkpoints/best_ckpt.tar
+2023-06-05 23:02:48,818 - root - INFO - resuming False
+2023-06-05 23:02:48,818 - root - INFO - local_rank 0
+2023-06-05 23:02:48,818 - root - INFO - enable_amp True
+2023-06-05 23:02:48,818 - root - INFO - name afno_backbone_finetune_00
+2023-06-05 23:02:48,818 - root - INFO - group era5_precipafno_backbone_finetune
+2023-06-05 23:02:48,818 - root - INFO - project ERA5_precip
+2023-06-05 23:02:48,819 - root - INFO - entity flowgan
+2023-06-05 23:02:48,819 - root - INFO - ---------------------------------------------------
+2023-06-05 23:02:58,111 - root - INFO - rank 0, begin data loader init
+2023-06-05 23:12:17,076 - root - INFO - --------------- Versions ---------------
+2023-06-05 23:12:17,087 - root - INFO - git branch: b'* master'
+2023-06-05 23:12:17,097 - root - INFO - git hash: b'011072c6720feb348f2f494f26c5c936189986fb'
+2023-06-05 23:12:17,098 - root - INFO - Torch: 2.0.1+cu117
+2023-06-05 23:12:17,098 - root - INFO - ----------------------------------------
+2023-06-05 23:12:17,098 - root - INFO - ------------------ Configuration ------------------
+2023-06-05 23:12:17,098 - root - INFO - Configuration file: /home/ubuntu/FourCastNet/config/AFNO.yaml
+2023-06-05 23:12:17,098 - root - INFO - Configuration name: afno_backbone_finetune
+2023-06-05 23:12:17,098 - root - INFO - lr 0.0001
+2023-06-05 23:12:17,098 - root - INFO - batch_size 64
+2023-06-05 23:12:17,098 - root - INFO - log_to_wandb True
+2023-06-05 23:12:17,098 - root - INFO - max_epochs 50
+2023-06-05 23:12:17,098 - root - INFO - pretrained True
+2023-06-05 23:12:17,098 - root - INFO - two_step_training True
+2023-06-05 23:12:17,098 - root - INFO - pretrained_ckpt_path None
+2023-06-05 23:12:17,098 - root - INFO - scheduler CosineAnnealingLR
+2023-06-05 23:12:17,098 - root - INFO - in_channels [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+2023-06-05 23:12:17,098 - root - INFO - out_channels [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+2023-06-05 23:12:17,098 - root - INFO - orography False
+2023-06-05 23:12:17,098 - root - INFO - orography_path None
+2023-06-05 23:12:17,098 - root - INFO - exp_dir /home/ubuntu/FourCastNet/exp_dir
+2023-06-05 23:12:17,098 - root - INFO - train_data_path /pscratch/sd/s/shas1693/data/era5/train
+2023-06-05 23:12:17,098 - root - INFO - valid_data_path /pscratch/sd/s/shas1693/data/era5/test
+2023-06-05 23:12:17,098 - root - INFO - inf_data_path /content/drive/Shareddrives/CS 231N (DuMBies)/FCN/FourCastNet/out_of_sample data
+2023-06-05 23:12:17,098 - root - INFO - time_means_path /content/drive/Shareddrives/CS 231N (DuMBies)/FCN/FourCastNet/stats_v0/time_means.npy
+2023-06-05 23:12:17,098 - root - INFO - global_means_path /content/drive/Shareddrives/CS 231N (DuMBies)/FCN/FourCastNet/stats_v0/global_means.npy
+2023-06-05 23:12:17,098 - root - INFO - global_stds_path /content/drive/Shareddrives/CS 231N (DuMBies)/FCN/FourCastNet/stats_v0/global_stds.npy
+2023-06-05 23:12:17,098 - root - INFO - loss l2
+2023-06-05 23:12:17,099 - root - INFO - num_data_workers 4
+2023-06-05 23:12:17,099 - root - INFO - dt 1
+2023-06-05 23:12:17,099 - root - INFO - n_history 0
+2023-06-05 23:12:17,099 - root - INFO - prediction_type iterative
+2023-06-05 23:12:17,099 - root - INFO - prediction_length 41
+2023-06-05 23:12:17,099 - root - INFO - n_initial_conditions 5
+2023-06-05 23:12:17,099 - root - INFO - ics_type default
+2023-06-05 23:12:17,099 - root - INFO - save_raw_forecasts True
+2023-06-05 23:12:17,099 - root - INFO - save_channel False
+2023-06-05 23:12:17,099 - root - INFO - masked_acc False
+2023-06-05 23:12:17,099 - root - INFO - maskpath None
+2023-06-05 23:12:17,099 - root - INFO - perturb False
+2023-06-05 23:12:17,099 - root - INFO - add_grid False
+2023-06-05 23:12:17,099 - root - INFO - N_grid_channels 0
+2023-06-05 23:12:17,099 - root - INFO - gridtype sinusoidal
+2023-06-05 23:12:17,099 - root - INFO - roll False
+2023-06-05 23:12:17,099 - root - INFO - num_blocks 8
+2023-06-05 23:12:17,099 - root - INFO - nettype afno
+2023-06-05 23:12:17,099 - root - INFO - patch_size 8
+2023-06-05 23:12:17,099 - root - INFO - width 56
+2023-06-05 23:12:17,099 - root - INFO - modes 32
+2023-06-05 23:12:17,099 - root - INFO - target default
+2023-06-05 23:12:17,099 - root - INFO - normalization zscore
+2023-06-05 23:12:17,099 - root - INFO - log_to_screen True
+2023-06-05 23:12:17,099 - root - INFO - save_checkpoint True
+2023-06-05 23:12:17,099 - root - INFO - enable_nhwc False
+2023-06-05 23:12:17,099 - root - INFO - optimizer_type FusedAdam
+2023-06-05 23:12:17,099 - root - INFO - crop_size_x None
+2023-06-05 23:12:17,099 - root - INFO - crop_size_y None
+2023-06-05 23:12:17,100 - root - INFO - plot_animations False
+2023-06-05 23:12:17,100 - root - INFO - add_noise False
+2023-06-05 23:12:17,100 - root - INFO - noise_std 0
+2023-06-05 23:12:17,100 - root - INFO - epsilon_factor 0
+2023-06-05 23:12:17,100 - root - INFO - world_size 1
+2023-06-05 23:12:17,100 - root - INFO - experiment_dir /home/ubuntu/FourCastNet/exp_dir/afno_backbone_finetune/00
+2023-06-05 23:12:17,100 - root - INFO - checkpoint_path /home/ubuntu/FourCastNet/exp_dir/afno_backbone_finetune/00/training_checkpoints/ckpt.tar
+2023-06-05 23:12:17,100 - root - INFO - best_checkpoint_path /home/ubuntu/FourCastNet/exp_dir/afno_backbone_finetune/00/training_checkpoints/best_ckpt.tar
+2023-06-05 23:12:17,100 - root - INFO - resuming False
+2023-06-05 23:12:17,100 - root - INFO - local_rank 0
+2023-06-05 23:12:17,100 - root - INFO - enable_amp True
+2023-06-05 23:12:17,100 - root - INFO - name afno_backbone_finetune_00
+2023-06-05 23:12:17,100 - root - INFO - group era5_precipafno_backbone_finetune
+2023-06-05 23:12:17,100 - root - INFO - project ERA5_precip
+2023-06-05 23:12:17,100 - root - INFO - entity flowgan
+2023-06-05 23:12:17,100 - root - INFO - ---------------------------------------------------
+2023-06-05 23:24:02,906 - root - INFO - --------------- Versions ---------------
+2023-06-05 23:24:02,917 - root - INFO - git branch: b'* master'
+2023-06-05 23:24:02,927 - root - INFO - git hash: b'011072c6720feb348f2f494f26c5c936189986fb'
+2023-06-05 23:24:02,928 - root - INFO - Torch: 2.0.1+cu117
+2023-06-05 23:24:02,928 - root - INFO - ----------------------------------------
+2023-06-05 23:24:02,928 - root - INFO - ------------------ Configuration ------------------
+2023-06-05 23:24:02,928 - root - INFO - Configuration file: /home/ubuntu/FourCastNet/config/AFNO.yaml
+2023-06-05 23:24:02,928 - root - INFO - Configuration name: afno_backbone_finetune
+2023-06-05 23:24:02,928 - root - INFO - lr 0.0001
+2023-06-05 23:24:02,928 - root - INFO - batch_size 64
+2023-06-05 23:24:02,928 - root - INFO - log_to_wandb True
+2023-06-05 23:24:02,928 - root - INFO - max_epochs 50
+2023-06-05 23:24:02,928 - root - INFO - pretrained True
+2023-06-05 23:24:02,928 - root - INFO - two_step_training True
+2023-06-05 23:24:02,928 - root - INFO - pretrained_ckpt_path None
+2023-06-05 23:24:02,928 - root - INFO - scheduler CosineAnnealingLR
+2023-06-05 23:24:02,928 - root - INFO - in_channels [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+2023-06-05 23:24:02,928 - root - INFO - out_channels [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+2023-06-05 23:24:02,928 - root - INFO - orography False
+2023-06-05 23:24:02,928 - root - INFO - orography_path None
+2023-06-05 23:24:02,928 - root - INFO - exp_dir /home/ubuntu/FourCastNet/exp_dir
+2023-06-05 23:24:02,928 - root - INFO - train_data_path /pscratch/sd/s/shas1693/data/era5/train
+2023-06-05 23:24:02,928 - root - INFO - valid_data_path /pscratch/sd/s/shas1693/data/era5/test
+2023-06-05 23:24:02,928 - root - INFO - inf_data_path /content/drive/Shareddrives/CS 231N (DuMBies)/FCN/FourCastNet/out_of_sample data
+2023-06-05 23:24:02,928 - root - INFO - time_means_path /content/drive/Shareddrives/CS 231N (DuMBies)/FCN/FourCastNet/stats_v0/time_means.npy
+2023-06-05 23:24:02,929 - root - INFO - global_means_path /content/drive/Shareddrives/CS 231N (DuMBies)/FCN/FourCastNet/stats_v0/global_means.npy
+2023-06-05 23:24:02,929 - root - INFO - global_stds_path /content/drive/Shareddrives/CS 231N (DuMBies)/FCN/FourCastNet/stats_v0/global_stds.npy
+2023-06-05 23:24:02,929 - root - INFO - loss l2
+2023-06-05 23:24:02,929 - root - INFO - num_data_workers 4
+2023-06-05 23:24:02,929 - root - INFO - dt 1
+2023-06-05 23:24:02,929 - root - INFO - n_history 0
+2023-06-05 23:24:02,929 - root - INFO - prediction_type iterative
+2023-06-05 23:24:02,929 - root - INFO - prediction_length 41
+2023-06-05 23:24:02,929 - root - INFO - n_initial_conditions 5
+2023-06-05 23:24:02,929 - root - INFO - ics_type default
+2023-06-05 23:24:02,929 - root - INFO - save_raw_forecasts True
+2023-06-05 23:24:02,929 - root - INFO - save_channel False
+2023-06-05 23:24:02,929 - root - INFO - masked_acc False
+2023-06-05 23:24:02,929 - root - INFO - maskpath None
+2023-06-05 23:24:02,929 - root - INFO - perturb False
+2023-06-05 23:24:02,929 - root - INFO - add_grid False
+2023-06-05 23:24:02,929 - root - INFO - N_grid_channels 0
+2023-06-05 23:24:02,929 - root - INFO - gridtype sinusoidal
+2023-06-05 23:24:02,929 - root - INFO - roll False
+2023-06-05 23:24:02,929 - root - INFO - num_blocks 8
+2023-06-05 23:24:02,929 - root - INFO - nettype afno
+2023-06-05 23:24:02,929 - root - INFO - patch_size 8
+2023-06-05 23:24:02,929 - root - INFO - width 56
+2023-06-05 23:24:02,929 - root - INFO - modes 32
+2023-06-05 23:24:02,929 - root - INFO - target default
+2023-06-05 23:24:02,929 - root - INFO - normalization zscore
+2023-06-05 23:24:02,930 - root - INFO - log_to_screen True
+2023-06-05 23:24:02,930 - root - INFO - save_checkpoint True
+2023-06-05 23:24:02,930 - root - INFO - enable_nhwc False
+2023-06-05 23:24:02,930 - root - INFO - optimizer_type FusedAdam
+2023-06-05 23:24:02,930 - root - INFO - crop_size_x None
+2023-06-05 23:24:02,930 - root - INFO - crop_size_y None
+2023-06-05 23:24:02,930 - root - INFO - plot_animations False
+2023-06-05 23:24:02,930 - root - INFO - add_noise False
+2023-06-05 23:24:02,930 - root - INFO - noise_std 0
+2023-06-05 23:24:02,930 - root - INFO - epsilon_factor 0
+2023-06-05 23:24:02,930 - root - INFO - world_size 1
+2023-06-05 23:24:02,930 - root - INFO - experiment_dir /home/ubuntu/FourCastNet/exp_dir/afno_backbone_finetune/00
+2023-06-05 23:24:02,930 - root - INFO - checkpoint_path /home/ubuntu/FourCastNet/exp_dir/afno_backbone_finetune/00/training_checkpoints/ckpt.tar
+2023-06-05 23:24:02,930 - root - INFO - best_checkpoint_path /home/ubuntu/FourCastNet/exp_dir/afno_backbone_finetune/00/training_checkpoints/best_ckpt.tar
+2023-06-05 23:24:02,930 - root - INFO - resuming False
+2023-06-05 23:24:02,930 - root - INFO - local_rank 0
+2023-06-05 23:24:02,930 - root - INFO - enable_amp True
+2023-06-05 23:24:02,930 - root - INFO - name afno_backbone_finetune_00
+2023-06-05 23:24:02,930 - root - INFO - group cs231n_dbmafno_backbone_finetune
+2023-06-05 23:24:02,930 - root - INFO - project cs231n_final_project
+2023-06-05 23:24:02,930 - root - INFO - entity cs231n_dbm
+2023-06-05 23:24:02,930 - root - INFO - ---------------------------------------------------
+2023-06-05 23:24:04,234 - root - INFO - rank 0, begin data loader init

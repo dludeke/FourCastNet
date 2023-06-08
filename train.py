@@ -64,6 +64,7 @@ logging_utils.config_logger()
 from utils.YParams import YParams
 from utils.data_loader_multifiles import get_data_loader
 from networks.afnonet import AFNONet, PrecipNet
+from networks.gfnet import GFNet
 from utils.img_utils import vis_precip
 import wandb
 from utils.weighted_acc_rmse import weighted_acc, weighted_rmse, weighted_rmse_torch, unlog_tp_torch
@@ -131,6 +132,8 @@ class Trainer():
 
     if params.nettype == 'afno':
       self.model = AFNONet(params).to(self.device) 
+    elif params.nettype == 'gfn':
+      self.model = GFNet(params).to(self.device) 
     else:
       raise Exception("not implemented")
      
@@ -333,8 +336,15 @@ class Trainer():
     valid_start = time.time()
 
     sample_idx = np.random.randint(len(self.valid_data_loader))
+    # print("We got: " + str(len(self.valid_data_loader)))
+    # data_batch, _ = next(iter(self.valid_data_loader))
+
+    # Print the number of channels
+    # num_channels = data_batch.size(1)
+    # print("Num_channels" + str(num_channels))
     with torch.no_grad():
       for i, data in enumerate(self.valid_data_loader, 0):
+
         if (not self.precip) and i>=n_valid_batches:
           break    
         inp, tar  = map(lambda x: x.to(self.device, dtype = torch.float), data)
@@ -533,14 +543,22 @@ class Trainer():
 if __name__ == '__main__':
   parser = argparse.ArgumentParser()
   parser.add_argument("--run_num", default='00', type=str)
-  parser.add_argument("--yaml_config", default='./config/AFNO.yaml', type=str)
-  parser.add_argument("--config", default='default', type=str)
+
+  ## AFNO
+  # parser.add_argument("--yaml_config", default='./config/AFNO.yaml', type=str)
+  # parser.add_argument("--config", default='afno_backbone', type=str)
+
+  ## GFN
+  parser.add_argument("--yaml_config", default='./config/GFN.yaml', type=str)
+  parser.add_argument("--config", default='gfn_backbone', type=str)
+
   parser.add_argument("--enable_amp", action='store_true')
   parser.add_argument("--epsilon_factor", default = 0, type = float)
 
   args = parser.parse_args()
 
   params = YParams(os.path.abspath(args.yaml_config), args.config)
+  
   params['epsilon_factor'] = args.epsilon_factor
 
   params['world_size'] = 1

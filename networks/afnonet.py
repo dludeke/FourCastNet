@@ -62,11 +62,15 @@ class AFNO2D(nn.Module):
 
         dtype = x.dtype
         x = x.float()
+        # print("A1")
+        # print(x.shape)
         B, H, W, C = x.shape
 
         x = torch.fft.rfft2(x, dim=(1, 2), norm="ortho")
         x = x.reshape(B, H, W // 2 + 1, self.num_blocks, self.block_size)
 
+        # print("A2")
+        # print(x.shape)
         o1_real = torch.zeros([B, H, W // 2 + 1, self.num_blocks, self.block_size * self.hidden_size_factor], device=x.device)
         o1_imag = torch.zeros([B, H, W // 2 + 1, self.num_blocks, self.block_size * self.hidden_size_factor], device=x.device)
         o2_real = torch.zeros(x.shape, device=x.device)
@@ -101,10 +105,20 @@ class AFNO2D(nn.Module):
         )
 
         x = torch.stack([o2_real, o2_imag], dim=-1)
+        # print("A3")
+        # print(x.shape)
         x = F.softshrink(x, lambd=self.sparsity_threshold)
+        # print("A4")
+        # print(x.shape)
         x = torch.view_as_complex(x)
+        # print("A5")
+        # print(x.shape)
         x = x.reshape(B, H, W // 2 + 1, C)
+        # print("A6")
+        # print(x.shape)
         x = torch.fft.irfft2(x, s=(H, W), dim=(1,2), norm="ortho")
+        # print("A7")
+        # print(x.shape)
         x = x.type(dtype)
 
         return x + bias
@@ -212,7 +226,7 @@ class AFNONet(nn.Module):
         for i in range(depth)])
 
         self.norm = norm_layer(embed_dim)
-
+        print(self.out_chans, self.patch_size[0], self.patch_size[1])
         self.head = nn.Linear(embed_dim, self.out_chans*self.patch_size[0]*self.patch_size[1], bias=False)
 
         trunc_normal_(self.pos_embed, std=.02)
@@ -232,20 +246,32 @@ class AFNONet(nn.Module):
         return {'pos_embed', 'cls_token'}
 
     def forward_features(self, x):
+        # print("Step 0")
+        # print(x.shape)
         B = x.shape[0]
         x = self.patch_embed(x)
+        # print("Step 1")
+        # print(x.shape)
         x = x + self.pos_embed
+        # print("Step 2")
+        # print(x.shape)
         x = self.pos_drop(x)
-        
+        # print("Step 3")
+        # print(x.shape)
         x = x.reshape(B, self.h, self.w, self.embed_dim)
+        # print("Step 3.5")
+        # print(x.shape)
         for blk in self.blocks:
             x = blk(x)
-
+        # print("Step 4")
+        # print(x.shape)
         return x
 
     def forward(self, x):
         x = self.forward_features(x)
         x = self.head(x)
+        # print("Step 5")
+        # print(x.shape)
         x = rearrange(
             x,
             "b h w (p1 p2 c_out) -> b c_out (h p1) (w p2)",
@@ -254,6 +280,8 @@ class AFNONet(nn.Module):
             h=self.img_size[0] // self.patch_size[0],
             w=self.img_size[1] // self.patch_size[1],
         )
+        # print("Step 6")
+        # print(x.shape)
         return x
 
 

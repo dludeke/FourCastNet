@@ -70,6 +70,7 @@ def get_data_loader(params, files_pattern, distributed, train):
                           drop_last=True,
                           pin_memory=torch.cuda.is_available())
 
+  # Print the number of channels
   if train:
     return dataloader, dataset, sampler
   else:
@@ -80,6 +81,7 @@ class GetDataset(Dataset):
     self.params = params
     self.location = location
     self.train = train
+
     self.dt = params.dt
     self.n_history = params.n_history
     self.in_channels = np.array(params.in_channels)
@@ -114,10 +116,19 @@ class GetDataset(Dataset):
     self.n_years = len(self.files_paths)
     with h5py.File(self.files_paths[0], 'r') as _f:
         logging.info("Getting file stats from {}".format(self.files_paths[0]))
-        self.n_samples_per_year = _f['fields'].shape[0]
+
+        # ORIGINAL CODE
+        # self.n_samples_per_year = _f['fields'].shape[0]
+        # #original image shape (before padding)
+        # self.img_shape_x = _f['fields'].shape[2] -1#just get rid of one of the pixels
+        # self.img_shape_y = _f['fields'].shape[3]
+
+        # MODIFIED WITHOUT FIELDS
+
+        self.n_samples_per_year = _f['small'].shape[0]
         #original image shape (before padding)
-        self.img_shape_x = _f['fields'].shape[2] -1#just get rid of one of the pixels
-        self.img_shape_y = _f['fields'].shape[3]
+        self.img_shape_x = _f['small'].shape[2] -1#just get rid of one of the pixels
+        self.img_shape_y = _f['small'].shape[3]
 
     self.n_samples_total = self.n_years * self.n_samples_per_year
     self.files = [None for _ in range(self.n_years)]
@@ -130,7 +141,8 @@ class GetDataset(Dataset):
 
   def _open_file(self, year_idx):
     _file = h5py.File(self.files_paths[year_idx], 'r')
-    self.files[year_idx] = _file['fields']  
+    # self.files[year_idx] = _file['fields']  
+    self.files[year_idx] = _file['small']  
     if self.orography:
       _orog_file = h5py.File(self.orography_path, 'r')
       self.orography_field = _orog_file['orog']

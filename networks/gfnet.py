@@ -9,6 +9,8 @@ import numpy as np
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+from einops import rearrange, repeat
+from einops.layers.torch import Rearrange
 
 # from timm.data import IMAGENET_DEFAULT_MEAN, IMAGENET_DEFAULT_STD
 from timm.models.layers import DropPath, to_2tuple, trunc_normal_
@@ -49,27 +51,42 @@ class Mlp(nn.Module):
 class GlobalFilter(nn.Module):
     def __init__(self, dim, h=14, w=8):
         super().__init__()
-        self.complex_weight = nn.Parameter(torch.randn(h, w, dim, 2, dtype=torch.float32) * 0.02)
-        self.w = w
-        self.h = h
+        self.complex_weight = nn.Parameter(torch.randn(1, h, 46, dim, 2, dtype=torch.float32) * 0.02)
+        # self.complex_weight = nn.Parameter(torch.randn(h, w, dim, 2, dtype=torch.float32) * 0.02)
 
     def forward(self, x, spatial_size=None):
-        B, N, C = x.shape
-        if spatial_size is None:
-            a = b = int(math.sqrt(N))
-        else:
-            a, b = spatial_size
+        # print("A1")
+        # print(x.shape)
+        # B, N, C = x.shape
+        B, H, W, C = x.shape
 
-        x = x.view(B, a, b, C)
+        # if spatial_size is None:
+        #     # a = b = int(math.sqrt(N))
+        #     a = 45
+        #     b = 90
+        # else:
+        #     a, b = spatial_size
 
+        # x = x.view(B, a, b, C)
+        # print("A2")
+        # print(x.shape)
         x = x.to(torch.float32)
 
         x = torch.fft.rfft2(x, dim=(1, 2), norm='ortho')
+        # print("A3")
+        # print(x.shape)
         weight = torch.view_as_complex(self.complex_weight)
-        x = x * weight
-        x = torch.fft.irfft2(x, s=(a, b), dim=(1, 2), norm='ortho')
 
-        x = x.reshape(B, N, C)
+        x = x * weight
+        # print("A4")
+        # print(x.shape)
+        x = torch.fft.irfft2(x, s=(H, W), dim=(1, 2), norm='ortho')
+        # print("A5")
+        # print(x.shape)
+
+        x = x.reshape(B, H, W, C)
+        # print("A6")
+        # print(x.shape)
 
         return x
 
@@ -106,24 +123,17 @@ class BlockLayerScale(nn.Module):
         return x
 
 class PatchEmbed(nn.Module):
-    """ Image to Patch Embedding
-    """
-    def __init__(self, img_size=224, patch_size=16, in_chans=3, embed_dim=768):
+    def __init__(self, img_size=(224, 224), patch_size=(16, 16), in_chans=3, embed_dim=768):
         super().__init__()
-        img_size = to_2tuple(img_size)
-        patch_size = to_2tuple(patch_size)
         num_patches = (img_size[1] // patch_size[1]) * (img_size[0] // patch_size[0])
         self.img_size = img_size
         self.patch_size = patch_size
         self.num_patches = num_patches
-
         self.proj = nn.Conv2d(in_chans, embed_dim, kernel_size=patch_size, stride=patch_size)
 
     def forward(self, x):
         B, C, H, W = x.shape
-        # FIXME look at relaxing size constraints
-        assert H == self.img_size[0] and W == self.img_size[1], \
-            f"Input image size ({H}*{W}) doesn't match model ({self.img_size[0]}*{self.img_size[1]})."
+        assert H == self.img_size[0] and W == self.img_size[1], f"Input image size ({H}*{W}) doesn't match model ({self.img_size[0]}*{self.img_size[1]})."
         x = self.proj(x).flatten(2).transpose(1, 2)
         return x
 
@@ -148,7 +158,7 @@ class DownLayer(nn.Module):
 
 class GFNet(nn.Module):
     
-    def __init__(self, img_size=224, patch_size=16, in_chans=3, num_classes=1000, embed_dim=768, depth=12,
+    def __init__(self, params, img_size=(720, 1440), patch_size=(16, 16), in_chans=1, num_classes=1, embed_dim=768, depth=12,
                  mlp_ratio=4., representation_size=None, uniform_drop=False,
                  drop_rate=0., drop_path_rate=0., norm_layer=None, 
                  dropcls=0):
@@ -173,9 +183,12 @@ class GFNet(nn.Module):
         """
         super().__init__()
         self.num_classes = num_classes
+        self.patch_size = patch_size
+        self.img_size = img_size
         self.num_features = self.embed_dim = embed_dim  # num_features for consistency with other models
         norm_layer = norm_layer or partial(nn.LayerNorm, eps=1e-6)
 
+        # print(img_size.keys())
         self.patch_embed = PatchEmbed(
                 img_size=img_size, patch_size=patch_size, in_chans=in_chans, embed_dim=embed_dim)
         num_patches = self.patch_embed.num_patches
@@ -183,8 +196,10 @@ class GFNet(nn.Module):
         self.pos_embed = nn.Parameter(torch.zeros(1, num_patches, embed_dim))
         self.pos_drop = nn.Dropout(p=drop_rate)
 
-        h = img_size // patch_size
-        w = h // 2 + 1
+        h = img_size[0] // patch_size[0]
+        self.h = h
+        w = img_size[1] // patch_size[1]
+        self.w = w
 
         if uniform_drop:
             print('using uniform droppath with expect rate', drop_path_rate)
@@ -213,13 +228,19 @@ class GFNet(nn.Module):
             self.pre_logits = nn.Identity()
 
         # Classifier head
-        self.head = nn.Linear(self.num_features, num_classes) if num_classes > 0 else nn.Identity()
+        # self.head = nn.Linear(self.num_features, num_classes) if num_classes > 0 else nn.Identity()
+        # print(embed_dim, 16 * 16 * 2)
+        # self.head = nn.Linear(embed_dim, 16 * 16 * 2, bias=False)
+        self.head = nn.Linear(embed_dim, num_classes*patch_size[0]*patch_size[1], bias=False)
 
         if dropcls > 0:
             print('dropout %.2f before classifier' % dropcls)
             self.final_dropout = nn.Dropout(p=dropcls)
         else:
             self.final_dropout = nn.Identity()
+
+        trunc_normal_(self.pos_embed, std=.02)
+        self.apply(self._init_weights)
 
         trunc_normal_(self.pos_embed, std=.02)
         self.apply(self._init_weights)
@@ -245,23 +266,53 @@ class GFNet(nn.Module):
         self.head = nn.Linear(self.embed_dim, num_classes) if num_classes > 0 else nn.Identity()
 
     def forward_features(self, x):
+        # print("Step 0")
+        # print(x.shape)
         B = x.shape[0]
         x = self.patch_embed(x)
+        # print("Step 1")
+        # print(x.shape)
         x = x + self.pos_embed
+        # print("Step 2")
+        # print(x.shape)
         x = self.pos_drop(x)
+        # print("Step 3")
+        # print(x.shape)
+# 
+        x = x.reshape(B, self.h, self.w, self.embed_dim)
 
+        # print("Step 3.5")
+        # print(x.shape)
         for blk in self.blocks:
             x = blk(x)
 
-        x = self.norm(x).mean(1)
+        # print("Step 4")
+        # print(x.shape)
+        # x = self.norm(x).mean(1)
+        # print("Step 5")
+        # print(x.shape)
         return x
 
     def forward(self, x):
+        # print(x.shape)
         x = self.forward_features(x)
         x = self.final_dropout(x)
+        # print("Step 6")
+        # print(x.shape)
         x = self.head(x)
+        # print("Step 7")
+        # print(x.shape)
+        x = rearrange(
+            x,
+            "b h w (p1 p2 c_out) -> b c_out (h p1) (w p2)",
+            p1=self.patch_size[0],
+            p2=self.patch_size[1],
+            h=self.img_size[0] // self.patch_size[0],
+            w=self.img_size[1] // self.patch_size[1],
+        )
+        # print("Step 8")
+        # print(x.shape)
         return x
-
 
 class GFNetPyramid(nn.Module):
     
@@ -288,12 +339,13 @@ class GFNetPyramid(nn.Module):
             norm_layer: (nn.Module): normalization layer
         """
         super().__init__()
+        self.embed_dim = embed_dim
         self.num_classes = num_classes
         self.num_features = self.embed_dim = embed_dim[-1]  # num_features for consistency with other models
         norm_layer = norm_layer or partial(nn.LayerNorm, eps=1e-6)
 
         self.patch_embed = nn.ModuleList()
-        
+        print(type(img_size))
         patch_embed = PatchEmbed(
                 img_size=img_size, patch_size=patch_size, in_chans=3, embed_dim=embed_dim[0])
         num_patches = patch_embed.num_patches
@@ -342,7 +394,16 @@ class GFNetPyramid(nn.Module):
         # Classifier head
         self.norm = norm_layer(embed_dim[-1])
 
-        self.head = nn.Linear(self.num_features, num_classes)
+
+        # self.norm = norm_layer(embed_dim)
+
+        #### GFN original
+        self.hea1d = nn.Linear(self.num_features, num_classes)
+
+        #### AFNO
+        # self.hea1d = nn.Linear(embed_dim, self.out_chans*self.patch_size[0]*self.patch_size[1], bias=False)
+
+        # self.hea1d = nn.Linear(embed_dim, 2*16*16, bias=False)
 
         if dropcls > 0:
             print('dropout %.2f before classifier' % dropcls)
@@ -376,10 +437,19 @@ class GFNetPyramid(nn.Module):
 
     def forward_features(self, x):
         for i in range(4):
+            print("Step 0")
+            print(x.shape)
             x = self.patch_embed[i](x)
+            print("Step 1")
+            print(x.shape)
             if i == 0:
                 x = x + self.pos_embed
+            
+            print("Step 2")
+            print(x.shape)
             x = self.blocks[i](x)
+            print("Step 3")
+            print(x.shape)
 
         x = self.norm(x).mean(1)
         return x
@@ -387,7 +457,13 @@ class GFNetPyramid(nn.Module):
     def forward(self, x):
         x = self.forward_features(x)
         x = self.final_dropout(x)
+        print("----test 1 start---")
+        print(x.shape)
+        print("---test 1 end----")
         x = self.head(x)
+        print("----test 2 start---")
+        print(x.shape)
+        print("---test 2 end----")
         return x
 
 def resize_pos_embed(posemb, posemb_new):
